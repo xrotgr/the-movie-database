@@ -10,14 +10,15 @@ import {
 import axios from 'axios';
 import type { Movie } from '@/types';
 
+const apiKey = import.meta.env.VITE_API_KEY;
+
 const fetchPopular = async () => {
   try {
     const { data } = await axios.get(
       'https://api.themoviedb.org/3/movie/popular',
       {
         headers: {
-          Authorization:
-            'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3ZTU0NmRiYWJiMmViOTVmZjJkMTkzOWU0MTc1Y2YwOSIsIm5iZiI6MTc3MTI2MTgxMC44MjMsInN1YiI6IjY5OTM0ZjcyN2Y4ODRiODY2NmZhMzljMyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.xhznomZRII_kJRKwOoMuwVcHkXUal5dAZiW8LOUfSuo',
+          Authorization: `Bearer ${apiKey}`,
         },
       },
     );
@@ -41,7 +42,7 @@ export const MyCarousel = () => {
     >
       <CarouselContent>
         {movies?.map((movie: Movie) => (
-          <CarouselItem className="basis-1/4">
+          <CarouselItem key={movie.id} className="basis-1/4">
             <MovieCard movie={movie} />
           </CarouselItem>
         ))}
