@@ -1,3 +1,34 @@
+import { Link } from '@tanstack/react-router';
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+} from '@/components/ui/navigation-menu';
+
 export const Header = () => {
-  return <></>;
+  return (
+    <header className="flex items-center">
+      <Link to="/">Logo</Link>
+      <NavigationMenu>
+        <NavigationMenuList>
+          <NavigationMenuItem>
+            <NavigationMenuTrigger>Movies</NavigationMenuTrigger>
+            <NavigationMenuContent>
+              <NavigationMenuLink asChild>
+                <Link to="/movie">Popular</Link>
+              </NavigationMenuLink>
+            </NavigationMenuContent>
+          </NavigationMenuItem>
+          <NavigationMenuItem>
+            <Link to="/about" className="[&.active]:font-bold">
+              About
+            </Link>
+          </NavigationMenuItem>
+        </NavigationMenuList>
+      </NavigationMenu>
+    </header>
+  );
 };
