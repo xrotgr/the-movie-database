@@ -22,11 +22,6 @@ export const Header = () => {
               </NavigationMenuLink>
             </NavigationMenuContent>
           </NavigationMenuItem>
-          <NavigationMenuItem>
-            <Link to="/about" className="[&.active]:font-bold">
-              About
-            </Link>
-          </NavigationMenuItem>
         </NavigationMenuList>
       </NavigationMenu>
     </header>
