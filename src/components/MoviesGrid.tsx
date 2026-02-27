@@ -3,12 +3,12 @@ import { MovieCard } from './MovieCard';
 import { Button } from './ui/button';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { useEffect, useRef } from 'react';
-import { type PopularMoviesResponse } from '@/api/movies';
+import { type MoviesResponse } from '@/api/movies';
 
 interface MoviesGridProps {
   name: string;
   queryKey: [string];
-  queryFn: (params: { pageParam: number }) => Promise<PopularMoviesResponse>;
+  queryFn: (params: { pageParam: number }) => Promise<MoviesResponse>;
 }
 
 export const MoviesGrid = ({ name, queryKey, queryFn }: MoviesGridProps) => {

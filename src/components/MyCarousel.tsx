@@ -8,7 +8,7 @@ import {
   CarouselNext,
 } from './ui/carousel';
 import type { Movie } from '@/types';
-import { fetchPopular } from '@/api/movies';
+import { moviesApi } from '@/api/movies';
 
 interface MyCarouselProps {
   name: string;
@@ -18,7 +18,7 @@ export const MyCarousel = ({ name }: MyCarouselProps) => {
   const pageParam = 1;
   const { data, isLoading, isError } = useQuery({
     queryKey: ['popular', pageParam],
-    queryFn: () => fetchPopular({ pageParam }),
+    queryFn: () => moviesApi.getPopular({ pageParam }),
   });
 
   if (isLoading) {

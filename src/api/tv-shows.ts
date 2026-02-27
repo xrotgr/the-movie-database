@@ -1,16 +1,8 @@
-import type { Movie } from '@/types';
 import { apiClient } from './config';
 
-export interface MoviesResponse {
-  page: number;
-  results: Movie[];
-  total_pages: number;
-  total_results: number;
-}
-
-export const moviesApi = {
+export const tvShowsApi = {
   async getPopular({ pageParam = 1 }) {
-    const { data } = await apiClient.get('/movie/popular', {
+    const { data } = await apiClient.get('/tv/popular', {
       params: {
         language: 'en-US',
         page: pageParam,
@@ -19,8 +11,8 @@ export const moviesApi = {
     return data;
   },
 
-  async getNowPlaying({ pageParam = 1 }) {
-    const { data } = await apiClient.get('/movie/now_playing', {
+  async getOnTheAir({ pageParam = 1 }) {
+    const { data } = await apiClient.get('/tv/on_the_air', {
       params: {
         language: 'en-US',
         page: pageParam,
@@ -30,7 +22,7 @@ export const moviesApi = {
   },
 
   async getTopRated({ pageParam = 1 }) {
-    const { data } = await apiClient.get('/movie/top_rated', {
+    const { data } = await apiClient.get('/tv/top_rated', {
       params: {
         language: 'en-US',
         page: pageParam,
@@ -39,8 +31,8 @@ export const moviesApi = {
     return data;
   },
 
-  async getUpcoming({ pageParam = 1 }) {
-    const { data } = await apiClient.get('/movie/upcoming', {
+  async getAiringToday({ pageParam = 1 }) {
+    const { data } = await apiClient.get('/tv/airing_today', {
       params: {
         language: 'en-US',
         page: pageParam,

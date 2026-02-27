@@ -24,10 +24,27 @@ export const Header = () => {
                 <Link to="/movie/now-playing">Now Playing</Link>
               </NavigationMenuLink>
               <NavigationMenuLink asChild>
-                <Link to="/movie/top-rated">Top rated</Link>
+                <Link to="/movie/top-rated">Top Rated</Link>
               </NavigationMenuLink>
               <NavigationMenuLink asChild>
                 <Link to="/movie/upcoming">Upcoming</Link>
+              </NavigationMenuLink>
+            </NavigationMenuContent>
+          </NavigationMenuItem>
+          <NavigationMenuItem>
+            <NavigationMenuTrigger>TV Shows</NavigationMenuTrigger>
+            <NavigationMenuContent>
+              <NavigationMenuLink asChild>
+                <Link to="/tv">Popular</Link>
+              </NavigationMenuLink>
+              <NavigationMenuLink asChild>
+                <Link to="/tv/airing-today">Airing Today</Link>
+              </NavigationMenuLink>
+              <NavigationMenuLink asChild>
+                <Link to="/tv/on-the-air">On TV</Link>
+              </NavigationMenuLink>
+              <NavigationMenuLink asChild>
+                <Link to="/tv/top-rated">Top Rated</Link>
               </NavigationMenuLink>
             </NavigationMenuContent>
           </NavigationMenuItem>
