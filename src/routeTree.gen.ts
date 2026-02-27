@@ -11,6 +11,10 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as MovieRouteImport } from './routes/movie'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as MovieIndexRouteImport } from './routes/movie/index'
+import { Route as MovieUpcomingRouteImport } from './routes/movie/upcoming'
+import { Route as MovieTopRatedRouteImport } from './routes/movie/top-rated'
+import { Route as MovieNowPlayingRouteImport } from './routes/movie/now-playing'
 
 const MovieRoute = MovieRouteImport.update({
   id: '/movie',
@@ -22,31 +26,80 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const MovieIndexRoute = MovieIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => MovieRoute,
+} as any)
+const MovieUpcomingRoute = MovieUpcomingRouteImport.update({
+  id: '/upcoming',
+  path: '/upcoming',
+  getParentRoute: () => MovieRoute,
+} as any)
+const MovieTopRatedRoute = MovieTopRatedRouteImport.update({
+  id: '/top-rated',
+  path: '/top-rated',
+  getParentRoute: () => MovieRoute,
+} as any)
+const MovieNowPlayingRoute = MovieNowPlayingRouteImport.update({
+  id: '/now-playing',
+  path: '/now-playing',
+  getParentRoute: () => MovieRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/movie': typeof MovieRoute
+  '/movie': typeof MovieRouteWithChildren
+  '/movie/now-playing': typeof MovieNowPlayingRoute
+  '/movie/top-rated': typeof MovieTopRatedRoute
+  '/movie/upcoming': typeof MovieUpcomingRoute
+  '/movie/': typeof MovieIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/movie': typeof MovieRoute
+  '/movie/now-playing': typeof MovieNowPlayingRoute
+  '/movie/top-rated': typeof MovieTopRatedRoute
+  '/movie/upcoming': typeof MovieUpcomingRoute
+  '/movie': typeof MovieIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/movie': typeof MovieRoute
+  '/movie': typeof MovieRouteWithChildren
+  '/movie/now-playing': typeof MovieNowPlayingRoute
+  '/movie/top-rated': typeof MovieTopRatedRoute
+  '/movie/upcoming': typeof MovieUpcomingRoute
+  '/movie/': typeof MovieIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/movie'
+  fullPaths:
+    | '/'
+    | '/movie'
+    | '/movie/now-playing'
+    | '/movie/top-rated'
+    | '/movie/upcoming'
+    | '/movie/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/movie'
-  id: '__root__' | '/' | '/movie'
+  to:
+    | '/'
+    | '/movie/now-playing'
+    | '/movie/top-rated'
+    | '/movie/upcoming'
+    | '/movie'
+  id:
+    | '__root__'
+    | '/'
+    | '/movie'
+    | '/movie/now-playing'
+    | '/movie/top-rated'
+    | '/movie/upcoming'
+    | '/movie/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  MovieRoute: typeof MovieRoute
+  MovieRoute: typeof MovieRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
@@ -65,12 +118,56 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/movie/': {
+      id: '/movie/'
+      path: '/'
+      fullPath: '/movie/'
+      preLoaderRoute: typeof MovieIndexRouteImport
+      parentRoute: typeof MovieRoute
+    }
+    '/movie/upcoming': {
+      id: '/movie/upcoming'
+      path: '/upcoming'
+      fullPath: '/movie/upcoming'
+      preLoaderRoute: typeof MovieUpcomingRouteImport
+      parentRoute: typeof MovieRoute
+    }
+    '/movie/top-rated': {
+      id: '/movie/top-rated'
+      path: '/top-rated'
+      fullPath: '/movie/top-rated'
+      preLoaderRoute: typeof MovieTopRatedRouteImport
+      parentRoute: typeof MovieRoute
+    }
+    '/movie/now-playing': {
+      id: '/movie/now-playing'
+      path: '/now-playing'
+      fullPath: '/movie/now-playing'
+      preLoaderRoute: typeof MovieNowPlayingRouteImport
+      parentRoute: typeof MovieRoute
+    }
   }
 }
 
+interface MovieRouteChildren {
+  MovieNowPlayingRoute: typeof MovieNowPlayingRoute
+  MovieTopRatedRoute: typeof MovieTopRatedRoute
+  MovieUpcomingRoute: typeof MovieUpcomingRoute
+  MovieIndexRoute: typeof MovieIndexRoute
+}
+
+const MovieRouteChildren: MovieRouteChildren = {
+  MovieNowPlayingRoute: MovieNowPlayingRoute,
+  MovieTopRatedRoute: MovieTopRatedRoute,
+  MovieUpcomingRoute: MovieUpcomingRoute,
+  MovieIndexRoute: MovieIndexRoute,
+}
+
+const MovieRouteWithChildren = MovieRoute._addFileChildren(MovieRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  MovieRoute: MovieRoute,
+  MovieRoute: MovieRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

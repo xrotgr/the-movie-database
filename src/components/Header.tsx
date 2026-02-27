@@ -20,6 +20,15 @@ export const Header = () => {
               <NavigationMenuLink asChild>
                 <Link to="/movie">Popular</Link>
               </NavigationMenuLink>
+              <NavigationMenuLink asChild>
+                <Link to="/movie/now-playing">Now Playing</Link>
+              </NavigationMenuLink>
+              <NavigationMenuLink asChild>
+                <Link to="/movie/top-rated">Top rated</Link>
+              </NavigationMenuLink>
+              <NavigationMenuLink asChild>
+                <Link to="/movie/upcoming">Upcoming</Link>
+              </NavigationMenuLink>
             </NavigationMenuContent>
           </NavigationMenuItem>
         </NavigationMenuList>

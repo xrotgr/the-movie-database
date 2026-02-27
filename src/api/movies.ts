@@ -1,15 +1,51 @@
-import axios from 'axios';
-const apiKey = import.meta.env.VITE_API_KEY;
+import type { Movie } from '@/types';
+import { apiClient } from './config';
 
-export const fetchPopular = async ({ pageParam = 1 }) => {
-  const { data } = await axios.get(
-    'https://api.themoviedb.org/3/movie/popular',
-    {
-      headers: {
-        Authorization: `Bearer ${apiKey}`,
+export interface PopularMoviesResponse {
+  page: number;
+  results: Movie[];
+  total_pages: number;
+  total_results: number;
+}
+
+export const moviesApi = {
+  async getPopular({ pageParam = 1 }) {
+    const { data } = await apiClient.get('/popular', {
+      params: {
+        language: 'en-US',
+        page: pageParam,
       },
-      params: { language: 'en-US', page: pageParam },
-    },
-  );
-  return data;
+    });
+    return data;
+  },
+
+  async getNowPlaying({ pageParam = 1 }) {
+    const { data } = await apiClient.get('/now_playing', {
+      params: {
+        language: 'en-US',
+        page: pageParam,
+      },
+    });
+    return data;
+  },
+
+  async getTopRated({ pageParam = 1 }) {
+    const { data } = await apiClient.get('/top_rated', {
+      params: {
+        language: 'en-US',
+        page: pageParam,
+      },
+    });
+    return data;
+  },
+
+  async getUpcoming({ pageParam = 1 }) {
+    const { data } = await apiClient.get('/upcoming', {
+      params: {
+        language: 'en-US',
+        page: pageParam,
+      },
+    });
+    return data;
+  },
 };
