@@ -7,48 +7,52 @@ import {
   CarouselPrevious,
   CarouselNext,
 } from './ui/carousel';
-import axios from 'axios';
 import type { Movie } from '@/types';
+import { moviesApi } from '@/api/movies';
 
-const apiKey = import.meta.env.VITE_API_KEY;
+interface MyCarouselProps {
+  name: string;
+}
 
-const fetchPopular = async () => {
-  try {
-    const { data } = await axios.get(
-      'https://api.themoviedb.org/3/movie/popular',
-      {
-        headers: {
-          Authorization: `Bearer ${apiKey}`,
-        },
-      },
-    );
-    return data.results;
-  } catch (e) {
-    console.log(e);
-  }
-};
-
-export const MyCarousel = () => {
-  const { data: movies } = useQuery({
-    queryKey: ['popular'],
-    queryFn: fetchPopular,
+export const MyCarousel = ({ name }: MyCarouselProps) => {
+  const pageParam = 1;
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ['popular', pageParam],
+    queryFn: () => moviesApi.getPopular({ pageParam }),
   });
 
+  if (isLoading) {
+    return <div>Loading</div>;
+  }
+
+  if (isError) {
+    return <div>Error occurred</div>;
+  }
+
+  const movies = data.results;
+
   return (
-    <Carousel
-      opts={{
-        loop: true,
-      }}
-    >
-      <CarouselContent>
-        {movies?.map((movie: Movie) => (
-          <CarouselItem key={movie.id} className="basis-1/4">
-            <MovieCard movie={movie} />
-          </CarouselItem>
-        ))}
-      </CarouselContent>
-      <CarouselPrevious />
-      <CarouselNext />
-    </Carousel>
+    <div className="container mx-auto px-12 md:px-10 lg:px-8">
+      <h1 className="font-bold text-xl mb-4 ml-6">{name}</h1>
+      <Carousel
+        opts={{
+          align: 'start',
+          loop: true,
+        }}
+      >
+        <CarouselContent>
+          {movies?.map((movie: Movie) => (
+            <CarouselItem
+              key={movie.id}
+              className="basis-1/2 sm:basis-1/3 md:basis-1/4 lg:basis-1/7"
+            >
+              <MovieCard movie={movie} />
+            </CarouselItem>
+          ))}
+        </CarouselContent>
+        <CarouselPrevious />
+        <CarouselNext />
+      </Carousel>
+    </div>
   );
 };
