@@ -15,8 +15,12 @@ export const timeStringify = (minutesRuntime: string | number) => {
 };
 
 export const genresStringify = (genres: Genre[]) => {
-  return genres.map((genre, index, arr) => {
-    if (arr.length - 1 === index) return genre.name + '.';
+  const newGenres = genres.map((genre, index, arr) => {
+    if (arr.length === 1) return genre.name;
+    if (arr.length - 1 === index) return 'and ' + genre.name;
+    if (arr.length - 2 === index) return genre.name + ' ';
+
     return genre.name + ', ';
   });
+  return newGenres.join('');
 };
