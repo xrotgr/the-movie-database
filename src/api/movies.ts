@@ -48,4 +48,9 @@ export const moviesApi = {
     });
     return data;
   },
+
+  async getMovieById(movieId: string) {
+    const { data } = await apiClient.get(`movie/${movieId}`);
+    return data;
+  },
 };

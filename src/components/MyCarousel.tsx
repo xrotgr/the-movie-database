@@ -9,6 +9,7 @@ import {
 } from './ui/carousel';
 import type { Movie } from '@/types';
 import { moviesApi } from '@/api/movies';
+import Autoplay from 'embla-carousel-autoplay';
 
 interface MyCarouselProps {
   name: string;
@@ -35,6 +36,7 @@ export const MyCarousel = ({ name }: MyCarouselProps) => {
     <div className="container mx-auto px-12 md:px-10 lg:px-8">
       <h1 className="font-bold text-xl mb-4 ml-6">{name}</h1>
       <Carousel
+        plugins={[Autoplay({ delay: 2000 })]}
         opts={{
           align: 'start',
           loop: true,
@@ -46,7 +48,7 @@ export const MyCarousel = ({ name }: MyCarouselProps) => {
               key={movie.id}
               className="basis-1/2 sm:basis-1/3 md:basis-1/4 lg:basis-1/7"
             >
-              <MovieCard movie={movie} />
+              <MovieCard movie={movie} link="/movie/$id" />
             </CarouselItem>
           ))}
         </CarouselContent>

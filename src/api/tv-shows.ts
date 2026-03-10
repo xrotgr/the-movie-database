@@ -40,4 +40,9 @@ export const tvShowsApi = {
     });
     return data;
   },
+
+  async getTvShowById(tvShowId: string) {
+    const { data } = await apiClient.get(`tv/${tvShowId}`);
+    return data;
+  },
 };
