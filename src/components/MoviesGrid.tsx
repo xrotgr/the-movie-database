@@ -4,6 +4,7 @@ import { Button } from './ui/button';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { useEffect, useRef } from 'react';
 import { type MoviesResponse } from '@/api/movies';
+import { useLocation } from '@tanstack/react-router';
 
 interface MoviesGridProps {
   name: string;
@@ -51,6 +52,17 @@ export const MoviesGrid = ({ name, queryKey, queryFn }: MoviesGridProps) => {
     new Map(allMovies.map((movie) => [movie.id, movie])).values(),
   );
 
+  const location = useLocation();
+  const pathName = location.pathname;
+  let link;
+  if (pathName.startsWith('/tv')) {
+    link = '/tv/$id';
+  } else if (pathName.startsWith('/movie')) {
+    link = '/movie/$id';
+  } else {
+    link = '';
+  }
+
   if (status === 'pending') {
     return <div>Loading</div>;
   }
@@ -69,6 +81,7 @@ export const MoviesGrid = ({ name, queryKey, queryFn }: MoviesGridProps) => {
           if (movies.length === index + 1) {
             return (
               <MovieCard
+                link={link}
                 ref={observerRef}
                 key={movie.id}
                 movie={movie}
@@ -76,7 +89,7 @@ export const MoviesGrid = ({ name, queryKey, queryFn }: MoviesGridProps) => {
               />
             );
           }
-          return <MovieCard key={movie.id} movie={movie} shadow />;
+          return <MovieCard link={link} key={movie.id} movie={movie} shadow />;
         })}
       </div>
       <Button

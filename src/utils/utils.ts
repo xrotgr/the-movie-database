@@ -11,6 +11,7 @@ export const timeStringify = (minutesRuntime: string | number) => {
   const runtime = Number(minutesRuntime);
   const hours = Math.floor(runtime / 60);
   const minutes = runtime % 60;
+  if (hours === 0) return `${minutes} minutes`;
   return `${hours}h ${minutes}m`;
 };
 
