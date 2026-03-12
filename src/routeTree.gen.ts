@@ -16,9 +16,11 @@ import { Route as MovieIndexRouteImport } from './routes/movie/index'
 import { Route as TvTopRatedRouteImport } from './routes/tv/top-rated'
 import { Route as TvOnTheAirRouteImport } from './routes/tv/on-the-air'
 import { Route as TvAiringTodayRouteImport } from './routes/tv/airing-today'
+import { Route as TvIdRouteImport } from './routes/tv/$id'
 import { Route as MovieUpcomingRouteImport } from './routes/movie/upcoming'
 import { Route as MovieTopRatedRouteImport } from './routes/movie/top-rated'
 import { Route as MovieNowPlayingRouteImport } from './routes/movie/now-playing'
+import { Route as MovieIdRouteImport } from './routes/movie/$id'
 
 const MovieRoute = MovieRouteImport.update({
   id: '/movie',
@@ -55,6 +57,11 @@ const TvAiringTodayRoute = TvAiringTodayRouteImport.update({
   path: '/tv/airing-today',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TvIdRoute = TvIdRouteImport.update({
+  id: '/tv/$id',
+  path: '/tv/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const MovieUpcomingRoute = MovieUpcomingRouteImport.update({
   id: '/upcoming',
   path: '/upcoming',
@@ -70,13 +77,20 @@ const MovieNowPlayingRoute = MovieNowPlayingRouteImport.update({
   path: '/now-playing',
   getParentRoute: () => MovieRoute,
 } as any)
+const MovieIdRoute = MovieIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => MovieRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/movie': typeof MovieRouteWithChildren
+  '/movie/$id': typeof MovieIdRoute
   '/movie/now-playing': typeof MovieNowPlayingRoute
   '/movie/top-rated': typeof MovieTopRatedRoute
   '/movie/upcoming': typeof MovieUpcomingRoute
+  '/tv/$id': typeof TvIdRoute
   '/tv/airing-today': typeof TvAiringTodayRoute
   '/tv/on-the-air': typeof TvOnTheAirRoute
   '/tv/top-rated': typeof TvTopRatedRoute
@@ -85,9 +99,11 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/movie/$id': typeof MovieIdRoute
   '/movie/now-playing': typeof MovieNowPlayingRoute
   '/movie/top-rated': typeof MovieTopRatedRoute
   '/movie/upcoming': typeof MovieUpcomingRoute
+  '/tv/$id': typeof TvIdRoute
   '/tv/airing-today': typeof TvAiringTodayRoute
   '/tv/on-the-air': typeof TvOnTheAirRoute
   '/tv/top-rated': typeof TvTopRatedRoute
@@ -98,9 +114,11 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/movie': typeof MovieRouteWithChildren
+  '/movie/$id': typeof MovieIdRoute
   '/movie/now-playing': typeof MovieNowPlayingRoute
   '/movie/top-rated': typeof MovieTopRatedRoute
   '/movie/upcoming': typeof MovieUpcomingRoute
+  '/tv/$id': typeof TvIdRoute
   '/tv/airing-today': typeof TvAiringTodayRoute
   '/tv/on-the-air': typeof TvOnTheAirRoute
   '/tv/top-rated': typeof TvTopRatedRoute
@@ -112,9 +130,11 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/movie'
+    | '/movie/$id'
     | '/movie/now-playing'
     | '/movie/top-rated'
     | '/movie/upcoming'
+    | '/tv/$id'
     | '/tv/airing-today'
     | '/tv/on-the-air'
     | '/tv/top-rated'
@@ -123,9 +143,11 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/movie/$id'
     | '/movie/now-playing'
     | '/movie/top-rated'
     | '/movie/upcoming'
+    | '/tv/$id'
     | '/tv/airing-today'
     | '/tv/on-the-air'
     | '/tv/top-rated'
@@ -135,9 +157,11 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/movie'
+    | '/movie/$id'
     | '/movie/now-playing'
     | '/movie/top-rated'
     | '/movie/upcoming'
+    | '/tv/$id'
     | '/tv/airing-today'
     | '/tv/on-the-air'
     | '/tv/top-rated'
@@ -148,6 +172,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   MovieRoute: typeof MovieRouteWithChildren
+  TvIdRoute: typeof TvIdRoute
   TvAiringTodayRoute: typeof TvAiringTodayRoute
   TvOnTheAirRoute: typeof TvOnTheAirRoute
   TvTopRatedRoute: typeof TvTopRatedRoute
@@ -205,6 +230,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TvAiringTodayRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/tv/$id': {
+      id: '/tv/$id'
+      path: '/tv/$id'
+      fullPath: '/tv/$id'
+      preLoaderRoute: typeof TvIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/movie/upcoming': {
       id: '/movie/upcoming'
       path: '/upcoming'
@@ -226,10 +258,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MovieNowPlayingRouteImport
       parentRoute: typeof MovieRoute
     }
+    '/movie/$id': {
+      id: '/movie/$id'
+      path: '/$id'
+      fullPath: '/movie/$id'
+      preLoaderRoute: typeof MovieIdRouteImport
+      parentRoute: typeof MovieRoute
+    }
   }
 }
 
 interface MovieRouteChildren {
+  MovieIdRoute: typeof MovieIdRoute
   MovieNowPlayingRoute: typeof MovieNowPlayingRoute
   MovieTopRatedRoute: typeof MovieTopRatedRoute
   MovieUpcomingRoute: typeof MovieUpcomingRoute
@@ -237,6 +277,7 @@ interface MovieRouteChildren {
 }
 
 const MovieRouteChildren: MovieRouteChildren = {
+  MovieIdRoute: MovieIdRoute,
   MovieNowPlayingRoute: MovieNowPlayingRoute,
   MovieTopRatedRoute: MovieTopRatedRoute,
   MovieUpcomingRoute: MovieUpcomingRoute,
@@ -248,6 +289,7 @@ const MovieRouteWithChildren = MovieRoute._addFileChildren(MovieRouteChildren)
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   MovieRoute: MovieRouteWithChildren,
+  TvIdRoute: TvIdRoute,
   TvAiringTodayRoute: TvAiringTodayRoute,
   TvOnTheAirRoute: TvOnTheAirRoute,
   TvTopRatedRoute: TvTopRatedRoute,

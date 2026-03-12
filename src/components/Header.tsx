@@ -34,11 +34,11 @@ export const Header = () => {
           <NavigationMenuItem>
             <NavigationMenuTrigger>TV Shows</NavigationMenuTrigger>
             <NavigationMenuContent>
-              <NavigationMenuLink asChild>
+              <NavigationMenuLink className="w-3xs" asChild>
                 <Link to="/tv">Popular</Link>
               </NavigationMenuLink>
               <NavigationMenuLink asChild>
-                <Link to="/tv/airing-today">Airing Today</Link>
+                <Link to="/tv/airing-today">{'Airing Today'}</Link>
               </NavigationMenuLink>
               <NavigationMenuLink asChild>
                 <Link to="/tv/on-the-air">On TV</Link>
