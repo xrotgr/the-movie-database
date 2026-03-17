@@ -5,9 +5,5 @@ export const Route = createFileRoute('/movie')({
 });
 
 function RouteComponent() {
-  return (
-    <div className="flex">
-      <Outlet />
-    </div>
-  );
+  return <Outlet />;
 }

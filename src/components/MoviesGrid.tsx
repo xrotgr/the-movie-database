@@ -7,12 +7,11 @@ import { type MoviesResponse } from '@/api/movies';
 import { useLocation } from '@tanstack/react-router';
 
 interface MoviesGridProps {
-  name: string;
-  queryKey: [string];
+  queryKey: string[];
   queryFn: (params: { pageParam: number }) => Promise<MoviesResponse>;
 }
 
-export const MoviesGrid = ({ name, queryKey, queryFn }: MoviesGridProps) => {
+export const MoviesGrid = ({ queryKey, queryFn }: MoviesGridProps) => {
   const { data, fetchNextPage, hasNextPage, isFetching, status } =
     useInfiniteQuery({
       queryKey,
@@ -72,10 +71,7 @@ export const MoviesGrid = ({ name, queryKey, queryFn }: MoviesGridProps) => {
   }
 
   return (
-    <div className="container mx-auto">
-      <h1 className="scroll-m-20 text-center text-4xl font-extrabold tracking-tight text-balance mb-4">
-        {name}
-      </h1>
+    <div>
       <div className="grid grid-cols-5 gap-4 mb-5">
         {movies?.map((movie: Movie, index) => {
           if (movies.length === index + 1) {
