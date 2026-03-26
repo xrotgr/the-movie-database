@@ -1,19 +1,38 @@
 import type { ContentType } from '@/components/Filters';
 import { apiClient } from './config';
 
-interface FetchWithGenresInterface {
+interface FetchDiscoverInterface {
   pageParam: number;
-  genres: string;
   contentType: ContentType;
+  voteAverageGte?: string;
+  voteAverageLte?: string;
+  runtimeGte?: string;
+  runtimeLte?: string;
+  voteCountGte?: string;
+  genres?: string;
 }
 
-export const fetchWithGenres = async ({
-  pageParam = 1,
-  genres = '',
+export const fetchDiscover = async ({
+  pageParam,
   contentType,
-}: FetchWithGenresInterface) => {
+  voteAverageGte,
+  voteAverageLte,
+  runtimeGte,
+  runtimeLte,
+  voteCountGte,
+  genres,
+}: FetchDiscoverInterface) => {
   const response = await apiClient.get(`/discover/${contentType}`, {
-    params: { language: 'en-US', page: pageParam, with_genres: genres },
+    params: {
+      language: 'en-US',
+      page: pageParam,
+      'vote_average.gte': voteAverageGte || undefined,
+      'vote_average.lte': voteAverageLte || undefined,
+      'with_runtime.gte': runtimeGte || undefined,
+      'with_runtime.lte': runtimeLte || undefined,
+      'vote_count.gte': voteCountGte || undefined,
+      with_genres: genres || undefined,
+    },
   });
   return response.data;
 };

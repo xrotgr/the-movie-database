@@ -5,9 +5,11 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 import { useEffect, useRef } from 'react';
 import { type MoviesResponse } from '@/api/movies';
 import { useLocation } from '@tanstack/react-router';
+import type { MovieDiscoveryKey } from './ContentWrapper';
+import { Spinner } from './ui/spinner';
 
 interface MoviesGridProps {
-  queryKey: string[];
+  queryKey: MovieDiscoveryKey;
   queryFn: (params: { pageParam: number }) => Promise<MoviesResponse>;
 }
 
@@ -63,7 +65,11 @@ export const MoviesGrid = ({ queryKey, queryFn }: MoviesGridProps) => {
   }
 
   if (status === 'pending') {
-    return <div>Loading</div>;
+    return (
+      <div className="flex justify-center items-center">
+        <Spinner className="size-16" />
+      </div>
+    );
   }
 
   if (status === 'error') {

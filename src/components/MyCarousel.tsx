@@ -10,6 +10,7 @@ import {
 import type { Movie } from '@/types';
 import { moviesApi } from '@/api/movies';
 import Autoplay from 'embla-carousel-autoplay';
+import { Spinner } from './ui/spinner';
 
 interface MyCarouselProps {
   name: string;
@@ -23,7 +24,11 @@ export const MyCarousel = ({ name }: MyCarouselProps) => {
   });
 
   if (isLoading) {
-    return <div>Loading</div>;
+    return (
+      <div className="flex justify-center items-center">
+        <Spinner className="size-16" />
+      </div>
+    );
   }
 
   if (isError) {
