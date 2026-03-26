@@ -1,5 +1,5 @@
 import { moviesApi } from '@/api/movies';
-import { MoviesGrid } from '@/components/MoviesGrid';
+import { ContentWrapper } from '@/components/ContentWrapper';
 import { createFileRoute } from '@tanstack/react-router';
 
 export const Route = createFileRoute('/movie/upcoming')({
@@ -8,7 +8,7 @@ export const Route = createFileRoute('/movie/upcoming')({
 
 function RouteComponent() {
   return (
-    <MoviesGrid
+    <ContentWrapper
       name="Upcoming movies"
       queryKey={['movies-upcoming']}
       queryFn={moviesApi.getUpcoming}

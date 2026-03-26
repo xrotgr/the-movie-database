@@ -4,13 +4,13 @@ import { TanStackRouterDevtools } from '@tanstack/react-router-devtools';
 
 const RootLayout = () => (
   <>
-    <div className="p-2 flex gap-2">
-      <Header />
-    </div>
+    <Header />
     <hr />
     <Outlet />
     <TanStackRouterDevtools />
   </>
 );
 
-export const Route = createRootRoute({ component: RootLayout });
+export const Route = createRootRoute({
+  component: RootLayout,
+});

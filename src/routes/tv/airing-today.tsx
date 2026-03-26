@@ -1,5 +1,5 @@
 import { tvShowsApi } from '@/api/tv-shows';
-import { MoviesGrid } from '@/components/MoviesGrid';
+import { ContentWrapper } from '@/components/ContentWrapper';
 import { createFileRoute } from '@tanstack/react-router';
 
 export const Route = createFileRoute('/tv/airing-today')({
@@ -8,7 +8,7 @@ export const Route = createFileRoute('/tv/airing-today')({
 
 function RouteComponent() {
   return (
-    <MoviesGrid
+    <ContentWrapper
       name="TV Shows Airing Today"
       queryKey={['tv-shows-airing-today']}
       queryFn={tvShowsApi.getAiringToday}

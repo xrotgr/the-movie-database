@@ -10,7 +10,7 @@ import {
 
 export const Header = () => {
   return (
-    <header className="flex items-center">
+    <header className="flex items-center p-2">
       <Link to="/">Logo</Link>
       <NavigationMenu>
         <NavigationMenuList>
