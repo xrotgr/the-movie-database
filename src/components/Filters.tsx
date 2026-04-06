@@ -1,6 +1,6 @@
 import { useNavigate } from '@tanstack/react-router';
 import { Button } from './ui/button';
-import { useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { SliderControlled } from './SliderControlled';
 import { Genres } from './Genres';
 import {
@@ -43,19 +43,31 @@ export const Filters = ({ contentType }: FilterProps) => {
     }
   };
 
-  const handleVoteAverageSliderChange = (arr: number[]) => {
+  const userScoreSliderHandler = useCallback((arr: number[]) => {
     setVoteAverageGte(arr[0]);
     setVoteAverageLte(arr[1]);
-  };
+  }, []);
 
-  const handleRuntimeSliderChange = (arr: number[]) => {
+  const userScoreValue = useMemo(
+    () => [voteAverageGte, voteAverageLte],
+    [voteAverageGte, voteAverageLte],
+  );
+
+  const runtimeSliderHandler = useCallback((arr: number[]) => {
     setRuntimeGte(arr[0]);
     setRuntimeLte(arr[1]);
-  };
+  }, []);
 
-  const handleVoteCountSliderChange = (arr: number[]) => {
+  const runtimeValue = useMemo(
+    () => [runtimeGte, runtimeLte],
+    [runtimeGte, runtimeLte],
+  );
+
+  const voteCountSliderHandler = useCallback((arr: number[]) => {
     setVoteCountGte(arr[0]);
-  };
+  }, []);
+
+  const voteCountsValue = useMemo(() => [voteCountGte], [voteCountGte]);
 
   return (
     <div className="mr-11">
@@ -73,23 +85,23 @@ export const Filters = ({ contentType }: FilterProps) => {
                 contentType={contentType}
               />
               <SliderControlled
-                value={[voteAverageGte, voteAverageLte]}
-                onChange={handleVoteAverageSliderChange}
+                value={userScoreValue}
+                onChange={userScoreSliderHandler}
                 name="User score"
                 min={0}
                 max={10}
                 step={1}
               />
               <SliderControlled
-                value={[voteCountGte]}
-                onChange={handleVoteCountSliderChange}
+                value={voteCountsValue}
+                onChange={voteCountSliderHandler}
                 name="Minimum User Votes"
                 max={500}
                 step={50}
               />
               <SliderControlled
-                value={[runtimeGte, runtimeLte]}
-                onChange={handleRuntimeSliderChange}
+                value={runtimeValue}
+                onChange={runtimeSliderHandler}
                 name="Runtime"
                 min={0}
                 max={400}
